@@ -22,7 +22,6 @@ class CustomUser(AbstractUser):
     class Meta:
         verbose_name = "CustomUser"
         verbose_name_plural = "CustomUsers"
-# Create your models here.
 
 
 class Results(models.Model):
