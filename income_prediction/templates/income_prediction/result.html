@@ -1,0 +1,85 @@
+{% extends 'income_prediction/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="mb-0"><i class="fas fa-chart-line mr-2"></i>Prediction Result</h2>
+                </div>
+                <div class="card-body">
+                    {% if prediction is not None %}
+                        <div class="text-center mb-4">
+                            <h3 class="text-success">{{ prediction|floatformat:2 }} у.е.</h3>
+                            <p class="text-muted">Predicted Revenue</p>
+                        </div>
+
+                        <div class="d-flex justify-content-center gap-3 mb-4">
+                            <a href="{% url 'prediction_form' %}" class="btn btn-primary">
+                                <i class="fas fa-redo mr-2"></i>New Prediction
+                            </a>
+                            <button id="exportJson" class="btn btn-success">
+                                <i class="fas fa-file-export mr-2"></i>Save as JSON
+                            </button>
+                        </div>
+
+                        <!-- Hidden JSON data -->
+                        <div id="jsonData" style="display: none;">
+                            {
+                                "prediction": {{ prediction }},
+                                "timestamp": "{% now 'Y-m-d H:i:s' %}",
+                                "username": "{{ user.username|default:'anonymous' }}",
+                                "computations_count": {{ user.computations_count|default:0 }},
+                            }
+                        </div>
+                    {% else %}
+                        <div class="alert alert-warning">
+                            <i class="fas fa-exclamation-triangle mr-2"></i>
+                            No prediction results available.
+                        </div>
+                        <div class="text-center">
+                            <a href="{% url 'prediction_form' %}" class="btn btn-primary">
+                                <i class="fas fa-calculator mr-2"></i>Try Prediction
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const exportBtn = document.getElementById('exportJson');
+    if (exportBtn) {
+        exportBtn.addEventListener('click', function() {
+            const jsonData = document.getElementById('jsonData').textContent;
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(jsonData);
+            const exportName = `prediction_${new Date().toISOString().slice(0,10)}_${Math.floor(Math.random()*1000)}.json`;
+
+            const link = document.createElement('a');
+            link.setAttribute('href', dataStr);
+            link.setAttribute('download', exportName);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            // Visual feedback
+            const originalHtml = exportBtn.innerHTML;
+            exportBtn.innerHTML = '<i class="fas fa-check mr-2"></i>Saved!';
+            exportBtn.classList.remove('btn-success');
+            exportBtn.classList.add('btn-secondary');
+
+            setTimeout(() => {
+                exportBtn.innerHTML = originalHtml;
+                exportBtn.classList.remove('btn-secondary');
+                exportBtn.classList.add('btn-success');
+            }, 2000);
+        });
+    }
+});
+</script>
+
+{% endblock %}

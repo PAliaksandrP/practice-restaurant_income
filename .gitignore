@@ -1,0 +1,7 @@
+**/.idea
+**/.venv
+**/__pycache__
+**/.ipynb_checkpointsdb.sqlite3
+django.log
+db.sqlite3
+.idea
