@@ -32,7 +32,7 @@ class AccountForm(forms.ModelForm):
         }
 
 
-# Дополнительно можно кастомизировать форму
+
 class CustomPasswordChangeForm(PasswordChangeForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -44,105 +44,38 @@ class CustomPasswordChangeForm(PasswordChangeForm):
 
 
 class PredictionInputForm(forms.Form):
-    # Числовые параметры
-    P1 = forms.FloatField(label='P1', min_value=0, initial=0, widget=forms.NumberInput(attrs={
+    """
+    Form for collecting prediction input parameters.
+
+    Attributes:
+        p1,p2,p12,p27,p28: Float fields for numerical parameters
+        city_group: Choice field for city classification
+        restaurant_type: Choice field for restaurant type
+        days_open: Date field for opening date
+    """
+
+    P1 = forms.FloatField(label='m2 of the location', min_value=0, initial=0, widget=forms.NumberInput(attrs={
         'class': 'form-control',
         'step': '0.5'
     }))
-    P2 = forms.FloatField(label='P2', min_value=0, initial=0, widget=forms.NumberInput(attrs={
+    P2 = forms.FloatField(label='Rating average cost of food', min_value=0, initial=0, widget=forms.NumberInput(attrs={
         'class': 'form-control',
         'step': '0.5'
     }))
-    P3 = forms.FloatField(label='P3', min_value=0, initial=0, widget=forms.NumberInput(attrs={
+    P12 = forms.FloatField(label='Rating monthly marketing budget', min_value=0, initial=0, widget=forms.NumberInput(attrs={
         'class': 'form-control',
         'step': '0.5'
     }))
-    P4 = forms.FloatField(label='P4', min_value=0, initial=0, widget=forms.NumberInput(attrs={
+    P27 = forms.FloatField(label='Number of school in the street', min_value=0, initial=0, widget=forms.NumberInput(attrs={
         'class': 'form-control',
         'step': '0.5'
     }))
-    P5 = forms.FloatField(label='P5', min_value=0, initial=0, widget=forms.NumberInput(attrs={
-        'class': 'form-control',
-        'step': '0.5'
-    }))
-    P6 = forms.FloatField(label='P6', min_value=0, initial=0, widget=forms.NumberInput(attrs={
-        'class': 'form-control',
-        'step': '0.5'
-    }))
-    P7 = forms.FloatField(label='P7', min_value=0, initial=0, widget=forms.NumberInput(attrs={
-        'class': 'form-control',
-        'step': '0.5'
-    }))
-    P11 = forms.FloatField(label='P11', min_value=0, initial=0, widget=forms.NumberInput(attrs={
-        'class': 'form-control',
-        'step': '0.5'
-    }))
-    P12 = forms.FloatField(label='P12', min_value=0, initial=0, widget=forms.NumberInput(attrs={
-        'class': 'form-control',
-        'step': '0.5'
-    }))
-    P14 = forms.FloatField(label='P14', min_value=0, initial=0, widget=forms.NumberInput(attrs={
-        'class': 'form-control',
-        'step': '0.5'
-    }))
-    P15 = forms.FloatField(label='P15', min_value=0, initial=0, widget=forms.NumberInput(attrs={
-        'class': 'form-control',
-        'step': '0.5'
-    }))
-    P17 = forms.FloatField(label='P17', min_value=0, initial=0, widget=forms.NumberInput(attrs={
-        'class': 'form-control',
-        'step': '0.5'
-    }))
-    P18 = forms.FloatField(label='P18', min_value=0, initial=0, widget=forms.NumberInput(attrs={
-        'class': 'form-control',
-        'step': '0.5'
-    }))
-    P19 = forms.FloatField(label='P19', min_value=0, initial=0, widget=forms.NumberInput(attrs={
-        'class': 'form-control',
-        'step': '0.5'
-    }))
-    P20 = forms.FloatField(label='P20', min_value=0, initial=0, widget=forms.NumberInput(attrs={
-        'class': 'form-control',
-        'step': '0.5'
-    }))
-    P21 = forms.FloatField(label='P21', min_value=0, initial=0, widget=forms.NumberInput(attrs={
-        'class': 'form-control',
-        'step': '0.5'
-    }))
-    P22 = forms.FloatField(label='P22', min_value=0, initial=0, widget=forms.NumberInput(attrs={
-        'class': 'form-control',
-        'step': '0.5'
-    }))
-    P23 = forms.FloatField(label='P23', min_value=0, initial=0, widget=forms.NumberInput(attrs={
-        'class': 'form-control',
-        'step': '0.5'
-    }))
-    P25 = forms.FloatField(label='P25', min_value=0, initial=0, widget=forms.NumberInput(attrs={
-        'class': 'form-control',
-        'step': '0.5'
-    }))
-    P27 = forms.FloatField(label='P27', min_value=0, initial=0, widget=forms.NumberInput(attrs={
-        'class': 'form-control',
-        'step': '0.5'
-    }))
-    P28 = forms.FloatField(label='P28', min_value=0, initial=0, widget=forms.NumberInput(attrs={
-        'class': 'form-control',
-        'step': '0.5'
-    }))
-    P29 = forms.FloatField(label='P29', min_value=0, initial=0, widget=forms.NumberInput(attrs={
-        'class': 'form-control',
-        'step': '0.5'
-    }))
-    P33 = forms.FloatField(label='P33', min_value=0, initial=0, widget=forms.NumberInput(attrs={
-        'class': 'form-control',
-        'step': '0.5'
-    }))
-    P37 = forms.FloatField(label='P37', min_value=0, initial=0, widget=forms.NumberInput(attrs={
+    P28 = forms.FloatField(label='Rating average table occupancy', min_value=0, initial=0, widget=forms.NumberInput(attrs={
         'class': 'form-control',
         'step': '0.5'
     }))
 
-    # Категориальные параметры
+
     CITY_GROUP_CHOICES = [
         ('Big Cities', 'Big Cities'),
         ('Other', 'Other'),

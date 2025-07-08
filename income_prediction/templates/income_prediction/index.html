@@ -1,0 +1,182 @@
+{% extends 'income_prediction/base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto text-center">
+            <h1 class="display-4 mb-4">Restaurant Revenue Prediction</h1>
+            <p class="lead">AI-powered forecasting tool for restaurant businesses</p>
+        </div>
+    </div>
+
+    <!-- Problem Solution Section -->
+    <div class="row mt-5">
+        <div class="col-md-6">
+            <div class="card h-100 shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h3><i class="fas fa-exclamation-triangle me-2"></i>The Problem</h3>
+                </div>
+                <div class="card-body">
+                    <p>Restaurant owners and managers face significant challenges in:</p>
+                    <ul class="fa-ul">
+                        <li><span class="fa-li"><i class="fas fa-check-circle text-danger"></i></span>
+                            <strong>Revenue Forecasting:</strong> Traditional methods often fail to account for complex market factors
+                        </li>
+                        <li><span class="fa-li"><i class="fas fa-check-circle text-danger"></i></span>
+                            <strong>Location Analysis:</strong> Difficulty predicting how location characteristics impact potential revenue
+                        </li>
+                        <li><span class="fa-li"><i class="fas fa-check-circle text-danger"></i></span>
+                            <strong>Menu Pricing:</strong> Lack of data-driven insights for optimal pricing strategies
+                        </li>
+                        <li><span class="fa-li"><i class="fas fa-check-circle text-danger"></i></span>
+                            <strong>Expansion Planning:</strong> High risk when opening new locations without reliable projections
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card h-100 shadow-sm">
+                <div class="card-header bg-success text-white">
+                    <h3><i class="fas fa-lightbulb me-2"></i>Our Solution</h3>
+                </div>
+                <div class="card-body">
+                    <p>Our machine learning platform provides:</p>
+                    <ul class="fa-ul">
+                        <li><span class="fa-li"><i class="fas fa-check-circle text-success"></i></span>
+                            <strong>Accurate Predictions:</strong> Advanced algorithms analyzing 25+ key parameters
+                        </li>
+                        <li><span class="fa-li"><i class="fas fa-check-circle text-success"></i></span>
+                            <strong>Location Intelligence:</strong> City-specific revenue modeling (Big Cities vs Others)
+                        </li>
+                        <li><span class="fa-li"><i class="fas fa-check-circle text-success"></i></span>
+                            <strong>Type Analysis:</strong> Different models for Food Courts (FC) and Inline (IL) restaurants
+                        </li>
+                        <li><span class="fa-li"><i class="fas fa-check-circle text-success"></i></span>
+                            <strong>Historical Insights:</strong> Days-open normalization for better trend analysis
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- How It Works Section -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-info text-white">
+                    <h3><i class="fas fa-cogs me-2"></i>How It Works</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-md-3 mb-4">
+                            <div class="step-circle bg-primary text-white mx-auto mb-3">1</div>
+                            <h5>Input Parameters</h5>
+                            <p>Provide details about your restaurant (P1-P37 metrics)</p>
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <div class="step-circle bg-primary text-white mx-auto mb-3">2</div>
+                            <h5>Select Type</h5>
+                            <p>Choose between Food Court or Inline restaurant</p>
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <div class="step-circle bg-primary text-white mx-auto mb-3">3</div>
+                            <h5>Location Data</h5>
+                            <p>Specify if you're in a Big City or Other area</p>
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <div class="step-circle bg-primary text-white mx-auto mb-3">4</div>
+                            <h5>Get Prediction</h5>
+                            <p>Receive your revenue forecast in conditional units</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Use Cases Section -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-warning text-dark">
+                    <h3><i class="fas fa-clipboard-list me-2"></i>Practical Applications</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5><i class="fas fa-store me-2 text-primary"></i>New Openings</h5>
+                                    <p>Evaluate potential revenue before committing to a new location, reducing investment risk.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5><i class="fas fa-chart-line me-2 text-primary"></i>Performance Benchmarking</h5>
+                                    <p>Compare actual revenue against predicted values to identify underperforming locations.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5><i class="fas fa-hand-holding-usd me-2 text-primary"></i>Investor Reporting</h5>
+                                    <p>Provide data-driven projections to potential investors and stakeholders.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Call to Action -->
+    <div class="row mt-5 mb-5">
+        <div class="col-12 text-center">
+            <div class="jumbotron bg-light p-5 rounded">
+                <h2 class="mb-4">Ready to Optimize Your Restaurant Business?</h2>
+                <a href="{% url 'prediction_form' %}" class="btn btn-primary btn-lg">
+                    <i class="fas fa-rocket me-2"></i>Try Prediction Now
+                </a>
+                <p class="mt-3 text-muted">No credit card required. Instant results.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .step-circle {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+    
+    .fa-ul {
+        margin-left: 2.5em;
+    }
+    
+    .card {
+        transition: transform 0.3s ease;
+    }
+    
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    
+    .jumbotron {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    }
+</style>
+{% endblock %}

@@ -17,51 +17,95 @@ model = ModelPredict()
 
 
 def index(request):
+    """
+    Render the main index page.
+
+    Args:
+        request: HttpRequest object
+
+    Returns:
+        HttpResponse: Rendered base template
+    """
+
     logger.info('Accessed index page')
-    return render(request, 'income_prediction/base.html')
+    return render(request, 'income_prediction/index.html')
 
 
 def register_view(request):
+    """
+        Handle user registration.
+
+        Processes registration form and creates new user account.
+        Automatically logs in user after successful registration.
+
+        Args:
+            request: HttpRequest object
+
+        Returns:
+            HttpResponse: Redirect to account page on success or registration form with errors
+        """
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
             user = form.save()
             login(request, user)
             logger.info(f'User {user.username} registered successfully')
-            return redirect("account")
+            return redirect("main")
     else:
         form = RegistrationForm()
     return render(request, 'income_prediction/register.html',{'form': form})
 
 
 def login_view(request):
-        if request.user.is_authenticated:
-            logger.info('User already authenticated, redirecting to account')
-            return redirect('account')
+    """
+       Handle user authentication.
 
-        if request.method == 'POST':
-            form = LoginForm(request.POST)
-            if form.is_valid():
-                username = form.cleaned_data['username']
-                password = form.cleaned_data['password']
-                user = authenticate(request, username=username, password=password)
+       Processes login form and authenticates user credentials.
 
-                if user is not None:
-                    login(request, user)
-                    logger.info(f'User {username} logged in successfully')
-                    messages.success(request, f"Welcome back, {username}!")
-                    return redirect('account')
-                else:
-                    logger.warning(f'Failed login attempt for username: {username}')
-                    messages.error(request, "Invalid username or password")
-        else:
-            form = LoginForm()
+       Args:
+           request: HttpRequest object
 
-        return render(request, 'income_prediction/login.html', {'form': form})
+       Returns:
+           HttpResponse: Redirect to account page on success or login form with errors
+       """
+    if request.user.is_authenticated:
+        logger.info('User already authenticated, redirecting to account')
+        return redirect('main')
+
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(request, username=username, password=password)
+
+            if user is not None:
+                login(request, user)
+                logger.info(f'User {username} logged in successfully')
+                messages.success(request, f"Welcome back, {username}!")
+                return redirect('main')
+            else:
+                logger.warning(f'Failed login attempt for username: {username}')
+                messages.error(request, "Invalid username or password")
+    else:
+        form = LoginForm()
+
+    return render(request, 'income_prediction/login.html', {'form': form})
 
 
 @login_required
 def account_view(request):
+    """
+    Display user account information and handle password changes.
+
+    Shows user profile, computation history and password change form.
+
+    Args:
+        request: HttpRequest object
+
+    Returns:
+        HttpResponse: Rendered account template with user data
+    """
     try:
         user = request.user
         results = user.results.all()[:10]  # Последние 10 результатов
@@ -96,6 +140,17 @@ def account_view(request):
 
 @login_required
 def prediction_form_view(request):
+    """
+    Handle prediction form submission and processing.
+
+    Processes input parameters, calculates days open, and makes revenue prediction.
+
+    Args:
+        request: HttpRequest object
+
+    Returns:
+        HttpResponse: Redirect to results page or prediction form with errors
+    """
     if request.method == 'POST':
         form = PredictionInputForm(request.POST)
         if form.is_valid():
@@ -108,8 +163,8 @@ def prediction_form_view(request):
 
             # Подготовка данных для модели
             params = {
-                **{f'P{i}': data[f'P{i}'] for i in [1, 2, 3, 4, 5, 6, 7, 11, 12, 14, 15, 17,
-                                                    18, 19, 20, 21, 22, 23, 25, 27, 28, 29, 33, 37]},
+                **{f'P{i}': data.get(f'P{i}', 0.0) for i in [1, 2, 3, 4, 5, 6, 7, 11, 12, 14, 15, 17,
+                                                             18, 19, 20, 21, 22, 23, 25, 27, 28, 29, 33, 37]},
                 'City Group_Big Cities': 1 if data['city_group'] == 'Big Cities' else 0,
                 'City Group_Other': 1 if data['city_group'] == 'Other' else 0,
                 'Type_FC': 1 if data['restaurant_type'] == 'FC' else 0,
@@ -132,6 +187,17 @@ def prediction_form_view(request):
 
 @login_required
 def results_view(request):
+    """
+    Display prediction results and save to user history.
+
+    Retrieves prediction from session, saves to database, and displays results.
+
+    Args:
+        request: HttpRequest object
+
+    Returns:
+        HttpResponse: Rendered results template with prediction data
+    """
     prediction = request.session.get('prediction')
     user = request.user
     user.computations_count += 1
@@ -150,6 +216,17 @@ def results_view(request):
 
 @login_required
 def logout_view(request):
+    """
+    Handle user logout.
+
+    Logs out user and redirects to login page.
+
+    Args:
+        request: HttpRequest object
+
+    Returns:
+        HttpResponse: Redirect to login page
+    """
     logout(request)
     logger.info(f'User {request.user.username} logged out successfully')
     messages.success(request, "You have been successfully logged out.")
